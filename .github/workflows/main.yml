@@ -27,9 +27,12 @@ jobs:
           repository: kakudenbuzo/avbot
           path: avbot
           token: ${{ secrets.GH_PAT }}
-          
+      
+      - name: test
+        run: ls
+      
       - name: Package install
-        run: npm ci
+        run: npm ci 
 
       - name: Build
         run: npm run build

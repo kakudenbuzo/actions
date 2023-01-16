@@ -14,11 +14,11 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     timeout-minutes: 1
-#     env:
-#       CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
-#       CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
-#       ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
-#       ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+    env:
+      CONSUMER_KEY: ${{ secrets.AVBOT_CONSUMER_KEY }}
+      CONSUMER_SECRET: ${{ secrets.AVBOT_CONSUMER_SECRET }}
+      ACCESS_TOKEN_KEY: ${{ secrets.AVBOT_ACCESS_TOKEN_KEY }}
+      ACCESS_TOKEN_SECRET: ${{ secrets.AVBOT_ACCESS_TOKEN_SECRET }}
 
     steps:
       - name: Checkout
@@ -28,14 +28,14 @@ jobs:
           path: avbot
           token: ${{ secrets.GH_PAT }}
       
-      - name: test
-        run: ls
-      
       - name: Package install
-        run: npm ci 
+        run: npm ci
+        working-directory: avbot
 
       - name: Build
         run: npm run build
-
+        working-directory: avbot
+        
       - name: Run bot
         run: node lib/index.js
+        working-directory: avbot

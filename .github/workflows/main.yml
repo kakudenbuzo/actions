@@ -1,0 +1,38 @@
+name: Run bot
+
+on:
+  schedule:
+    # 2時間ごとに処理実行
+    # UTC の 15:00 は JST だと 24:00 。
+    - cron: "0 */2 * * *"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+#     env:
+#       CONSUMER_KEY: ${{ secrets.CONSUMER_KEY }}
+#       CONSUMER_SECRET: ${{ secrets.CONSUMER_SECRET }}
+#       ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
+#       ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: kakudenbuzo/avbot
+          path: avbot
+          token: ${{ secrets.GH_PAT }}
+          
+      - name: Package install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run bot
+        run: node lib/index.js

@@ -3,7 +3,6 @@ name: Run bot
 on:
   schedule:
     # 2時間ごとに処理実行
-    # UTC の 15:00 は JST だと 24:00 。
     - cron: "0 */2 * * *"
 
   # Allows you to run this workflow manually from the Actions tab
